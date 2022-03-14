@@ -9,6 +9,16 @@ class NeuralNetwork:
         self.weight = []
 
     # initialize weights
+    def gaussian_weights(self, loc, scale):
+        for i in range(self.layerNumber):
+            self.weight.append(np.random.normal(
+                loc, scale,
+                (self.neuronNumberPerLayer[i+1], self.neuronNumberPerLayer[i])
+            ))
+
+    def zero_weights(self):
+        for i in range(self.layerNumber):
+            self.weight.append(np.zeros(self.neuronNumberPerLayer[i+1]*self.neuronNumberPerLayer[i]))
 
     # set activation function
 
