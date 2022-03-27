@@ -57,6 +57,7 @@ def get_data(dataset, kind, seed=0):
 
 
 if __name__ == '__main__':
+    """
     train_x, train_y = get_data("Iris", "train", 100)
     valid_x, valid_y = get_data("Iris", "valid", 100)
     node_num = [4, 30, 3]
@@ -66,6 +67,7 @@ if __name__ == '__main__':
     network.fit(train_x, train_y)
     acc = network.test(valid_x, valid_y)
     print(acc)
+    """
     '''
     train_x, train_y = get_data("MNIST", "train")
     valid_x, valid_y = get_data("MNIST", "t10k")
