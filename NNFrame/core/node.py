@@ -2,6 +2,7 @@ import numpy as np
 from graph import  Graph, default_graph
 import abc
 
+
 class Node(object):
     """
     计算图节点基类
