@@ -16,6 +16,7 @@ class Node(object):
         self.children = []
         self.value = None  # 本节点的值
         self.jacobi = None  # 对本节点参数的梯度矩阵
+        self.kargs = kargs
 
         # 建立双向链接
         for parent in parents:
