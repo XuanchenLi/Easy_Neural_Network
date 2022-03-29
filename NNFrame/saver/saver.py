@@ -4,8 +4,9 @@ import datetime
 import numpy as np
 from ..core.node import *
 from ..core.graph import *
-from ..operators.loss import *
+from ..core.core import *
 from ..operators.metrics import *
+from .saver_aux import *
 
 
 class Saver(object):
@@ -113,3 +114,20 @@ class Saver(object):
         kargs['graph'] = graph
 
         parents = []
+        for parent_name in parents_name:
+            parent_node = get_node_from_graph(parent_name, graph=graph)
+            if parent_node is None:
+                parent_node_json = None
+                for node in graph_json:
+                    if node.name == parent_name:
+                        parent_node_json = node
+
+                parent_node = Saver.create_node(
+                    graph, graph_json, parent_node_json
+                )
+            parents.append(parent_node)
+        if node_type == 'Variable':
+            dim = tuple(dim)
+            return ClassMining.get_instance_by_subclass(Node, node_type)(*parents, dim=dim, name=node_name, **kargs)
+        else:
+            return ClassMining.get_instance_by_subclass(Node, node_type)(*parents, name=node_name, **kargs)
