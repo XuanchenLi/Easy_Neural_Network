@@ -102,6 +102,7 @@ class Variable(Node):
             self.value = np.mat(
                 np.random.normal(0, 0.001, self.dim)
             )
+            # 添加更多初始化方式
         self.trainable = trainable
 
     def set_value(self, value):

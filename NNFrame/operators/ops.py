@@ -291,7 +291,7 @@ class MaxPooling(Operator):
                 flag.append(tmp)
             res.append(row)
         self.flag = np.mat(flag)
-        self.value = np.mat(row)
+        self.value = np.mat(res)
 
     def get_jacobi(self, parent):
         return self.flag

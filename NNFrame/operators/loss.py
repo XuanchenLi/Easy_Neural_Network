@@ -2,6 +2,7 @@ import numpy as np
 from ..core.node import Node
 from .ops import SoftMax
 
+
 class LossFunction(Node):
     pass
 
