@@ -1,4 +1,4 @@
-from .node import*
+
 
 
 class Graph(object):

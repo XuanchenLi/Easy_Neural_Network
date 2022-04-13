@@ -1,6 +1,6 @@
 import abc
 import numpy as np
-from ..core import *
+from NNF.core import *
 
 
 class Trainer(object):

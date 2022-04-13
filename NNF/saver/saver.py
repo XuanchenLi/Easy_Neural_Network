@@ -1,11 +1,8 @@
 import json
 import os
 import datetime
-import numpy as np
-from ..core.node import *
-from ..core.graph import *
-from ..core.core import *
-from ..operators.metrics import *
+from NNF.core.core import *
+from operators.metrics import *
 from .saver_aux import *
 
 

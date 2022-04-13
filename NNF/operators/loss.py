@@ -1,5 +1,5 @@
 import numpy as np
-from ..core.node import Node
+from NNF.core.node import Node
 from .ops import SoftMax
 
 
@@ -33,7 +33,7 @@ class CrossEntropyWithSoftMax(LossFunction):
 
     def get_jacobi(self, parent):
         prob = SoftMax.softmax(self.parents[0].value)
-        if parent is parent[0]:
+        if parent is self.parents[0]:
             return (prob - self.parents[1].value).T
         else:
             return (-np.log(prob)).T
