@@ -10,6 +10,7 @@ data = data.sample(len(data), replace=False)
 le = LabelEncoder()
 print(data["species"])
 number_label = le.fit_transform(data["species"])
+print(number_label)
 # 将整数形式的标签转换成One-Hot编码
 oh = OneHotEncoder(sparse=False)
 one_hot_label = oh.fit_transform(number_label.reshape(-1, 1))
@@ -74,7 +75,7 @@ for epoch in range(10):
   pred.append(predict.value.A.ravel())  # 模型的预测结果：3个概率值
  pred = np.array(pred).argmax(axis=1) # 取最大概率对应的类别为预测类别print
  # 判断预 测结果与样本标签相同的数量与训练集总数量之比，即模型预测的正确率
- print(pred)
+ print(number_label)
  accuracy = (number_label == pred).astype(np.int).sum() / len(data)
  # 打印当前epoch数和模型在训练集上的正确率
  print("epoch: {:d}, accuracy: {:.3f}".format(epoch + 1, accuracy))
