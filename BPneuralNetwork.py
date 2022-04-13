@@ -8,6 +8,7 @@ data = pd.read_csv("D:\\iris_training.csv")
 data = data.sample(len(data), replace=False)
 # 将字符串形式的类别标签转换成整数0，1，2
 le = LabelEncoder()
+print(data["species"])
 number_label = le.fit_transform(data["species"])
 # 将整数形式的标签转换成One-Hot编码
 oh = OneHotEncoder(sparse=False)
@@ -18,15 +19,19 @@ features = data[['SepalLength',
  'PetalLength',
  'PetalWidth']].values
 # 构造计算图：输入向量，是一个4×1矩阵，不需要初始化，不参与训练
-x = ms.core.Variable(dim=(4, 1), init=False, trainable=False)
-# One-Hot编码，是3×1矩阵
-one_hot = ms.core.Variable(dim=(3, 1), init=False, trainable=False)
-# 第一隐藏层，10个神经元，激活函数为ReLU
-hidden_1 = ms.layer.fc(x, 4, 10, "ReLU")
-# 第二隐藏层，10个神经元，激活函数为ReLU
-hidden_2 = ms.layer.fc(hidden_1, 10, 10, "ReLU")
-# 输出层，3个神经元，无激活函数
-output = ms.layer.fc(hidden_2, 10, 3, None)
+
+def nn():
+ x = ms.core.Variable(dim=(4, 1), init=False, trainable=False)
+ # One-Hot编码，是3×1矩阵
+ one_hot = ms.core.Variable(dim=(3, 1), init=False, trainable=False)
+ # 第一隐藏层，10个神经元，激活函数为ReLU
+ hidden_1 = ms.layer.fc(x, 4, 10, "ReLU")
+ # 第二隐藏层，10个神经元，激活函数为ReLU
+ hidden_2 = ms.layer.fc(hidden_1, 10, 10, "ReLU")
+ # 输出层，3个神经元，无激活函数
+ output = ms.layer.fc(hidden_2, 10, 3, None)
+ return one_hot,one_hot_label,output,x
+one_hot,one_hot_label,output,x=nn();
 # 模型输出概率
 predict = ms.operators.SoftMax(output)
 # 交叉熵损失函数
@@ -67,8 +72,9 @@ for epoch in range(10):
   # 在模型的predict节点上执行前向传播
   predict.forward()
   pred.append(predict.value.A.ravel())  # 模型的预测结果：3个概率值
- pred = np.array(pred).argmax(axis=1) # 取最大概率对应的类别为预测类别
- # 判断预测结果与样本标签相同的数量与训练集总数量之比，即模型预测的正确率
+ pred = np.array(pred).argmax(axis=1) # 取最大概率对应的类别为预测类别print
+ # 判断预 测结果与样本标签相同的数量与训练集总数量之比，即模型预测的正确率
+ print(pred)
  accuracy = (number_label == pred).astype(np.int).sum() / len(data)
  # 打印当前epoch数和模型在训练集上的正确率
  print("epoch: {:d}, accuracy: {:.3f}".format(epoch + 1, accuracy))
