@@ -1,5 +1,5 @@
-from ..core.node import *
-from ..operators.ops import *
+from NNF.core.node import *
+from operators.ops import *
 
 
 def fc(input, input_size, size, activation):
@@ -14,7 +14,7 @@ def fc(input, input_size, size, activation):
     affine = Add(MatMul(weights, input), bias)
 
     if activation == "ReLU":
-        return LeakyReLU(0.0, affine)
+        return LeakyReLU(affine)
     elif activation == "Logistic":
         return Logistic(affine)
     else:

@@ -1,5 +1,5 @@
 import numpy as np
-from ..core.node import Node
+from NNF.core.node import Node
 
 
 def fill_diagonal(pos, filler):
@@ -53,12 +53,12 @@ class MatMul(Operator):
 
     def get_jacobi(self, parent):
         zeros = np.mat(
-            np.zeros(self.dimension(), parent.dimension())
+            np.zeros((self.dimension(), parent.dimension()))
         )
         if parent is self.parents[0]:
             return fill_diagonal(zeros, self.parents[1].value.T)
         else:
-            jacobi = fill_diagonal(zeros, parent[0].value)
+            jacobi = fill_diagonal(zeros, self.parents[0].value)
             r_sort = np.arange(self.dimension()).reshape(
                 self.shape()[::-1]
             ).T.ravel()
@@ -101,9 +101,9 @@ class SoftMax(Operator):
 
 
 class LeakyReLU(Operator):
-    def __init__(self, nslope=0, **kargs):
-        Operator.__init__(**kargs)
-        self.nslope = nslope
+
+
+    nslope = 0.1
 
     def compute(self):
         self.value = np.mat(

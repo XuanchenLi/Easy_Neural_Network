@@ -1,8 +1,9 @@
 import abc
+
 import numpy as np
-from ..core.node import *
-from ..core.graph import *
-from ..core.core import *
+
+from NNF.core.graph import *
+from NNF.core.core import *
 
 
 class Optimizer(object):
@@ -24,7 +25,7 @@ class Optimizer(object):
     def update_aux(self):
         pass
 
-    def update(self, var_grad):
+    def update(self, var_grad=None):
         if var_grad is not None:
             self.apply_grad(var_grad)
 

@@ -1,7 +1,7 @@
 import numpy as np
-from graph import  Graph, default_graph
-import abc
 
+import abc
+from .graph import Graph, default_graph
 
 class Node(object):
     """
@@ -9,6 +9,7 @@ class Node(object):
     """
 
     def __init__(self, *parents, **kargs):
+        self.kargs = kargs
         self.graph = kargs.get('graph', default_graph)
         self.need_save = kargs.get('need_save', True)
         self.mangle_name(**kargs)
@@ -16,7 +17,7 @@ class Node(object):
         self.children = []
         self.value = None  # 本节点的值
         self.jacobi = None  # 对本节点参数的梯度矩阵
-        self.kargs = kargs
+
 
         # 建立双向链接
         for parent in parents:
@@ -29,7 +30,7 @@ class Node(object):
 
     def mangle_name(self, **kargs):
         self.name = kargs.get('name', "{}:{}".format(
-            self.__class__.__name__, self.graph.node_count()))
+            self.__class__.__name__, self.graph.node_num()))
         if self.graph.name_scope:
             self.name = "{}/{}".format(self.graph.name_scope, self.name)
 
@@ -54,10 +55,11 @@ class Node(object):
                 )
             else:
                 self.jacobi = np.mat(
-                    np.zeros(res.dimension(), self.dimension())
+                    np.zeros((res.dimension(), self.dimension()))
                 )
                 for child in self.children:
-                    self.jacobi += child.backward(res) * child.get_jacobi(self)
+                    if child.value is not None:
+                        self.jacobi += child.backward(res) * child.get_jacobi(self)
 
         return self.jacobi
 
