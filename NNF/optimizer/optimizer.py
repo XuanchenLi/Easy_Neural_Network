@@ -4,6 +4,7 @@ import numpy as np
 
 from NNF.core.graph import *
 from NNF.core.core import *
+from NNF.core.node import Node
 
 
 class Optimizer(object):

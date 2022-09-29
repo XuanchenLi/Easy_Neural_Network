@@ -1,5 +1,5 @@
 from NNF.core.node import *
-from operators.ops import *
+from NNF.operators.ops import *
 
 
 def fc(input, input_size, size, activation):
